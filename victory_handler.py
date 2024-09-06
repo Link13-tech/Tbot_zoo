@@ -3,6 +3,7 @@ import random
 import smtplib
 from email.message import EmailMessage
 from typing import Type
+from dotenv import load_dotenv
 
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
@@ -10,6 +11,7 @@ from aiogram import Router, types, F
 from data import questions, responses, weights, description_animals, animals
 from aiogram.types import ReplyKeyboardRemove, InlineKeyboardButton, InlineKeyboardMarkup
 
+load_dotenv()
 router = Router()
 user_answers = {}
 
@@ -151,10 +153,10 @@ async def send_result(message: types.Message, state: FSMContext):
 
 @router.message()
 async def send_email(user_name, selected_animal):
-    smtp_host = 'smtp.mail.ru'
-    smtp_port = 587
-    email_login = 'bac9.91@mail.ru'
-    email_password = '9UauvSHFzP5Ub8Y1KQcD'
+    smtp_host = os.getenv('SMTP_HOST')
+    smtp_port = os.getenv('SMTP_PORT')
+    email_login = os.getenv('EMAIL_LOGIN')
+    email_password = os.getenv('EMAIL_PASSWORD')
 
     recipient_email = 'bac9.91@mail.ru'
 
@@ -165,7 +167,7 @@ async def send_email(user_name, selected_animal):
     message_text = f'Пользователь: {user_name} - Тотемное животное: {selected_animal}'
     message.set_content(message_text)
     try:
-        with smtplib.SMTP(smtp_host, smtp_port) as smtp_server:
+        with smtplib.SMTP(smtp_host, int(smtp_port)) as smtp_server:
             smtp_server.starttls()
             smtp_server.login(email_login, email_password)
             smtp_server.send_message(message)
