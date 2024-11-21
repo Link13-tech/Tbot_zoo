@@ -1,4 +1,6 @@
 import asyncio
+import os
+
 from aiogram.enums import ParseMode
 import logging
 import sys
@@ -8,10 +10,12 @@ from aiogram.types import Message
 from aiogram import F
 from aiogram.utils.formatting import (Bold, as_list, as_marked_section)
 from victory_handler import router
-from data import TOKEN, answers
+from data import answers
 from aiogram.types import ReplyKeyboardRemove
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
+
+TOKEN = os.getenv('TOKEN')
 dp = Dispatcher()
 dp.include_router(router)
 

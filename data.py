@@ -1,6 +1,4 @@
 
-TOKEN = '7055376234:AAFlABJjOy2ZYf9XDRlT6aVWnkU7kwFjVdg'
-
 questions = {
     "Q1":
     "Давай погрузимся в детство, вспомни школьное время, как ты считаешь тебе "
